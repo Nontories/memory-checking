@@ -24,8 +24,12 @@ COPY . .
 # Cài đặt dependencies của Laravel
 RUN composer install --no-dev --optimize-autoloader
 
+# Copy file .env.example và đổi tên thành .env
+RUN cp .env.example .env
+
 # Tạo APP_KEY
 RUN php artisan key:generate
+
 
 # Thiết lập quyền cho storage
 RUN chmod -R 777 storage bootstrap/cache
