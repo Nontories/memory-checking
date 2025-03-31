@@ -33,14 +33,8 @@ RUN php artisan key:generate
 # Thiết lập quyền cho storage
 RUN chmod -R 777 storage bootstrap/cache
 
-# Cấu hình Apache để trỏ đến thư mục `public`
-RUN echo "<VirtualHost *:80>
-    DocumentRoot /var/www/html/public
-    <Directory /var/www/html/public>
-        AllowOverride All
-        Require all granted
-    </Directory>
-</VirtualHost>" > /etc/apache2/sites-available/000-default.conf
+# 🔹 Cấu hình Apache để trỏ đến thư mục `public`
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Kích hoạt mod_rewrite để Laravel hoạt động đúng
 RUN a2enmod rewrite
