@@ -30,11 +30,22 @@ RUN cp .env.example .env
 # Tạo APP_KEY
 RUN php artisan key:generate
 
-
 # Thiết lập quyền cho storage
 RUN chmod -R 777 storage bootstrap/cache
 
-# Cấu hình Apache
+# Cấu hình Apache để trỏ đến thư mục `public`
+RUN echo "<VirtualHost *:80>
+    DocumentRoot /var/www/html/public
+    <Directory /var/www/html/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>" > /etc/apache2/sites-available/000-default.conf
+
+# Kích hoạt mod_rewrite để Laravel hoạt động đúng
+RUN a2enmod rewrite
+
+# Thiết lập quyền sở hữu thư mục
 RUN chown -R www-data:www-data /var/www/html
 
 # Expose cổng 80
