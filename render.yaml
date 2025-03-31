@@ -1,0 +1,13 @@
+services:
+  - name: memory-checking
+    type: web
+    runtime: docker
+    repo: https://github.com/Nontories/memory-checking
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        sync: false
